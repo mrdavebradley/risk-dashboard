@@ -14,17 +14,18 @@ def get_risk_score():
     # 1. Define our Indicators: (Ticker, Direction, Weight)
     # Direction -1 means HIGHER value = MORE RISK (Risk-Off)
     # Direction +1 means HIGHER value = BETTER MARKET (Risk-On)
+    # --- UPDATED LEAD-HEAVY WEIGHTS ---
     indicators = {
-        'VIX': {'ticker': '^VIX', 'dir': -1, 'w': 0.12},
-        'DXY': {'ticker': 'DX-Y.NYB', 'dir': -1, 'w': 0.10},
-        '10Y_Yield': {'ticker': 'DGS10', 'dir': 1, 'w': 0.08, 'source': 'fred'},
-        'HY_Spread': {'ticker': 'BAMLH0A0HYM2', 'dir': -1, 'w': 0.12, 'source': 'fred'},
-        'Gold': {'ticker': 'GC=F', 'dir': -1, 'w': 0.08},
-        'BTC': {'ticker': 'BTC-USD', 'dir': 1, 'w': 0.05},
-        'Copper': {'ticker': 'HG=F', 'dir': 1, 'w': 0.05}, # Used for Copper/Gold ratio
-        'SPY': {'ticker': 'SPY', 'dir': 1, 'w': 0.00}, # Benchmark
-        'RSP': {'ticker': 'RSP', 'dir': 1, 'w': 0.10}, # For Breadth
-        'IWM': {'ticker': 'IWM', 'dir': 1, 'w': 0.08}  # For Small-caps
+        "VIX": {"ticker": "^VIX", "w": 0.12, "dir": -1},          # Volatility (High = Bad)
+        "DXY": {"ticker": "DX-Y.NYB", "w": 0.15, "dir": -1},      # Dollar (High = Bad for Liquidity)
+        "10Y_Yield": {"ticker": "TNX", "w": 0.08, "dir": -1, "source": "yahoo"}, # Adjusted Yield
+        "HY_Spread": {"ticker": "BAMLH0A0HYM2", "w": 0.20, "dir": -1, "source": "fred"}, # MAJOR LEAD
+        "Gold": {"ticker": "GC=F", "w": 0.05, "dir": -1},         # Defensive Anchor
+        "BTC": {"ticker": "BTC-USD", "w": 0.07, "dir": 1},        # Risk Appetite Proxy
+        "Copper": {"ticker": "HG=F", "w": 0.08, "dir": 1},        # Global Growth
+        "SPY": {"ticker": "SPY", "w": 0.05, "dir": 1},            # Price (Reduced to avoid lagging)
+        "RSP": {"ticker": "RSP", "w": 0.10, "dir": 1},            # Market Breadth
+        "IWM": {"ticker": "IWM", "w": 0.10, "dir": 1}             # Small Cap Health
     }
 
     scores = []
