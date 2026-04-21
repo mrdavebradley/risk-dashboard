@@ -66,55 +66,18 @@
         <section class="mb-16">
             <h2 class="text-2xl font-bold text-white mb-4">The Mathematical Framework</h2>
             <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
-                <h3 class="text-lg font-bold text-white mb-4">2. Full Strategic Weighting (100%)</h3>
-        <p class="text-sm mb-4">We weigh each indicator based on its historical reliability as a leading warning signal. Macro "plumbing" is given higher priority than surface price action.</p>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="space-y-2">
-                <h4 class="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Primary Leads (47%)</h4>
-                <div class="flex flex-col gap-1.5">
-                    <div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-700 text-[10px]">
-                        <span>High-Yield Spreads</span> <span class="text-emerald-400">20%</span>
-                    </div>
-                    <div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-700 text-[10px]">
-                        <span>US Dollar (DXY)</span> <span class="text-emerald-400">15%</span>
-                    </div>
-                    <div class="flex justify-between bg-slate-900 p-2 rounded border border-slate-700 text-[10px]">
-                        <span>VIX (Volatility)</span> <span class="text-emerald-400">12%</span>
-                    </div>
+                <h3 class="text-lg font-bold text-white mb-4">1. Normalization (The Z-Score)</h3>
+                <p class="text-sm mb-6">Markets are built of different units (Dollars, Percentages, Volatility Points). To compare them, we calculate a <strong>rolling 1-year Z-Score</strong> for every asset. This measures how far the current price is from its 52-week average. This prevents a volatile asset like Bitcoin from drowning out a stable one like Treasury Yields.</p>
+                
+                <h3 class="text-lg font-bold text-white mb-4">2. Strategic Weighting</h3>
+                <p class="text-sm mb-4">Not all indicators are created equal. We assign weights based on an indicator's historical reliability as a "Lead Signal":</p>
+                <div class="flex flex-wrap gap-2 text-[10px] font-bold uppercase tracking-widest">
+                    <span class="bg-slate-900 px-3 py-1 rounded-md border border-slate-700 text-emerald-400">High-Yield Spreads (15%)</span>
+                    <span class="bg-slate-900 px-3 py-1 rounded-md border border-slate-700 text-emerald-400">VIX Index (12%)</span>
+                    <span class="bg-slate-900 px-3 py-1 rounded-md border border-slate-700 text-slate-400">DXY (10%)</span>
+                    <span class="bg-slate-900 px-3 py-1 rounded-md border border-slate-700 text-slate-400">Small Caps (10%)</span>
+                    <span class="bg-slate-900 px-3 py-1 rounded-md border border-slate-700 text-slate-500">Copper (5%)</span>
                 </div>
-            </div>
-
-            <div class="space-y-2">
-                <h4 class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Market Internals (53%)</h4>
-                <div class="grid grid-cols-1 gap-1.5">
-                    <div class="flex justify-between bg-slate-800/40 p-2 rounded text-[10px]">
-                        <span>Small Caps (IWM)</span> <span>10%</span>
-                    </div>
-                    <div class="flex justify-between bg-slate-800/40 p-2 rounded text-[10px]">
-                        <span>Market Breadth (RSP)</span> <span>10%</span>
-                    </div>
-                    <div class="flex justify-between bg-slate-800/40 p-2 rounded text-[10px]">
-                        <span>10Y Treasury Yields</span> <span>8%</span>
-                    </div>
-                    <div class="flex justify-between bg-slate-800/40 p-2 rounded text-[10px]">
-                        <span>Copper (Growth)</span> <span>8%</span>
-                    </div>
-                    <div class="flex justify-between bg-slate-800/40 p-2 rounded text-[10px]">
-                        <span>Bitcoin (Liquidity)</span> <span>7%</span>
-                    </div>
-                    <div class="flex justify-between bg-slate-800/40 p-2 rounded text-[10px]">
-                        <span>S&P 500 Price (SPY)</span> <span>5%</span>
-                    </div>
-                    <div class="flex justify-between bg-slate-800/40 p-2 rounded text-[10px]">
-                        <span>Gold (Defensive)</span> <span>5%</span>
-                    </div>
-                    <div class="flex justify-between bg-slate-800/40 p-2 rounded text-[10px]">
-                        <span>Money Market Flows</span> <span>2%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
             </div>
         </section>
 
