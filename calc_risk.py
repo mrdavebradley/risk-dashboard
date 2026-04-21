@@ -4,7 +4,8 @@ from fredapi import Fred
 import numpy as np
 
 # --- SETUP ---
-FRED_KEY = "370f65ef821e3a8625d72c28a55c764b"
+import os
+FRED_KEY = os.getenv("FRED_API_KEY")
 fred = Fred(api_key=FRED_KEY)
 
 def get_risk_score():
@@ -73,3 +74,19 @@ elif final_score < -35:
 else:
     print("SENTIMENT: NEUTRAL 🟡")
 print("="*30)
+# ... (at the bottom of your existing code)
+import json
+from datetime import datetime
+
+# Create a data dictionary
+data_to_save = {
+    "crss": final_score,
+    "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    "status": "RISK-ON" if final_score > 35 else "RISK-OFF" if final_score < -35 else "NEUTRAL"
+}
+
+# Save it as a file named 'data.json'
+with open('data.json', 'w') as f:
+    json.dump(data_to_save, f)
+
+print("Data saved to data.json")
