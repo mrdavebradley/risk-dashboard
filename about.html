@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methodology | Macro Risk Monitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-300 font-sans leading-relaxed p-6">
+
+    <div class="max-w-4xl mx-auto">
+        <nav class="mb-12">
+            <a href="index.html" class="text-emerald-500 hover:text-emerald-400 font-bold flex items-center gap-2 transition-all">
+                ← Back to Live Dashboard
+            </a>
+        </nav>
+
+        <header class="mb-12 border-b border-slate-800 pb-10">
+            <h1 class="text-5xl font-black text-white mb-4 tracking-tight">Understanding the CRSS</h1>
+            <p class="text-xl text-slate-400">The Composite Risk Sentiment Score (CRSS) is a rule-based quantitative model designed to measure the "pulse" of global financial markets.</p>
+        </header>
+
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-4">The Philosophy</h2>
+            <p class="mb-4">Most investors make the mistake of looking at the S&P 500 in isolation. However, price action often masks underlying fragility. The CRSS was built to solve the "Noise Problem" by aggregating 11 distinct data points across equity, credit, currency, and commodity markets into a single, actionable signal.</p>
+            <p>By using a rules-based approach, we strip away the emotional bias of news cycles and focus on where the money is actually moving.</p>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6">The Multi-Asset Dataset</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-emerald-400 font-bold mb-2 uppercase tracking-widest text-xs">Volatility & Sentiment</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><strong class="text-white">VIX Index:</strong> Known as the "Fear Gauge," it measures expected volatility. High VIX signals panic; low VIX signals complacency.</li>
+                        <li><strong class="text-white">Bitcoin:</strong> The ultimate "Liquidity Sponge." It thrives when money is cheap and risk appetite is high.</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-emerald-400 font-bold mb-2 uppercase tracking-widest text-xs">Credit & Liquidity</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><strong class="text-white">High-Yield Spreads:</strong> The difference in yield between "Junk Bonds" and Treasuries. Widenining spreads signal corporate stress.</li>
+                        <li><strong class="text-white">DXY (US Dollar):</strong> As the world's reserve currency, a rising dollar often sucks liquidity out of emerging markets and risk assets.</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-emerald-400 font-bold mb-2 uppercase tracking-widest text-xs">Market Breadth</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><strong class="text-white">RSP vs SPY:</strong> Compares the Equal-Weight S&P 500 to the Cap-Weight. It shows if the whole market is rising or just 5 giant tech stocks.</li>
+                        <li><strong class="text-white">IWM (Small Caps):</strong> Small companies are the "Canaries in the Coal Mine" for domestic economic growth.</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-emerald-400 font-bold mb-2 uppercase tracking-widest text-xs">Real Economy</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><strong class="text-white">Copper:</strong> "Dr. Copper" is said to have a PhD in economics because it is essential for construction and manufacturing.</li>
+                        <li><strong class="text-white">Gold:</strong> The classic safe haven. When it outperforms stocks, the market is usually seeking defensive shelter.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-4">The Mathematical Framework</h2>
+            <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+                <h3 class="text-lg font-bold text-white mb-4">1. Normalization (The Z-Score)</h3>
+                <p class="text-sm mb-6">Markets are built of different units (Dollars, Percentages, Volatility Points). To compare them, we calculate a <strong>rolling 1-year Z-Score</strong> for every asset. This measures how far the current price is from its 52-week average. This prevents a volatile asset like Bitcoin from drowning out a stable one like Treasury Yields.</p>
+                
+                <h3 class="text-lg font-bold text-white mb-4">2. Strategic Weighting</h3>
+                <p class="text-sm mb-4">Not all indicators are created equal. We assign weights based on an indicator's historical reliability as a "Lead Signal":</p>
+                <div class="flex flex-wrap gap-2 text-[10px] font-bold uppercase tracking-widest">
+                    <span class="bg-slate-900 px-3 py-1 rounded-md border border-slate-700 text-emerald-400">High-Yield Spreads (15%)</span>
+                    <span class="bg-slate-900 px-3 py-1 rounded-md border border-slate-700 text-emerald-400">VIX Index (12%)</span>
+                    <span class="bg-slate-900 px-3 py-1 rounded-md border border-slate-700 text-slate-400">DXY (10%)</span>
+                    <span class="bg-slate-900 px-3 py-1 rounded-md border border-slate-700 text-slate-400">Small Caps (10%)</span>
+                    <span class="bg-slate-900 px-3 py-1 rounded-md border border-slate-700 text-slate-500">Copper (5%)</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 text-center">Interpreting the Regimes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="border border-green-500/30 bg-green-500/5 p-6 rounded-2xl">
+                    <h4 class="text-green-500 font-black mb-2 uppercase tracking-tighter">RISK ON (+35 to +100)</h4>
+                    <p class="text-xs">High conviction. Capital is flowing aggressively into growth assets. Bullish sentiment dominates.</p>
+                </div>
+                <div class="border border-yellow-500/30 bg-yellow-500/5 p-6 rounded-2xl">
+                    <h4 class="text-yellow-500 font-black mb-2 uppercase tracking-tighter">NEUTRAL (-35 to +35)</h4>
+                    <p class="text-xs">Indecision. The market is in a "wait and see" mode, likely consolidating before a major move.</p>
+                </div>
+                <div class="border border-red-500/30 bg-red-500/5 p-6 rounded-2xl">
+                    <h4 class="text-red-500 font-black mb-2 uppercase tracking-tighter">RISK OFF (-100 to -35)</h4>
+                    <p class="text-xs">Flight to safety. Investors are selling growth and buying defensives (Cash, Gold, Treasuries).</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-slate-600 text-xs border-t border-slate-800 pt-10 pb-20">
+            <p class="mb-4">© 2026 Macro Risk Monitor. All Rights Reserved.</p>
+            <p class="max-w-2xl mx-auto italic"><strong>Disclaimer:</strong> This dashboard is for educational and informational purposes only. It does not constitute financial, investment, or legal advice. Trading involves significant risk, and the CRSS model may not account for sudden "Black Swan" events or geopolitical shifts.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
