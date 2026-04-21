@@ -2,18 +2,20 @@ name: Daily Risk Update
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # Runs every 6 hours
-  workflow_dispatch: # Allows you to run it manually with a button
+    - cron: '0 */6 * * *' # Run every 6 hours
+  workflow_dispatch:  # Allows you to run it manually with a button
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # This tells GitHub this specific job is allowed to save files
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Updated version
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Updated version
         with:
           python-version: '3.9'
 
@@ -31,6 +33,6 @@ jobs:
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
-          git add .
-          git commit -m "Automated Risk Score Update" || exit 0
+          git add data.json
+          git commit -m "Automated Risk Score Update" || echo "No changes to commit"
           git push
