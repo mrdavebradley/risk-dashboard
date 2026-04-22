@@ -1,0 +1,32 @@
+name: Generate Historical Study
+on:
+  workflow_dispatch: # This allows you to click a button to start it
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install yfinance pandas
+
+      - name: Run Study Script
+        run: python generate_study.py
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+
+      - name: Commit and Push CSV
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add historical_crss_study.csv
+          git commit -m "Add 30-year historical study data"
+          git push
+          
