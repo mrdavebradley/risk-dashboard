@@ -1,6 +1,6 @@
 name: Generate Historical Study
 on:
-  workflow_dispatch: # This allows you to click a button to start it
+  workflow_dispatch: # Allows manual trigger from the Actions tab
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install yfinance pandas
+        run: pip install yfinance pandas pandas_datareader
 
       - name: Run Study Script
         run: python generate_study.py
@@ -27,6 +27,5 @@ jobs:
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
           git add historical_crss_study.csv
-          git commit -m "Add 30-year historical study data"
+          git commit -m "Add 30-year historical study data with 11 indicators" || echo "No changes to commit"
           git push
-          
