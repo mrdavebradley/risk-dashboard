@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Historical Research | Macro Risk Monitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.1"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <nav class="mb-8"><a href="index.html" class="text-emerald-500 hover:underline">← Live Dashboard</a></nav>
+        
+        <h1 class="text-4xl font-black mb-2">30-Year Correlation Study</h1>
+        <p class="text-slate-400 mb-8 max-w-2xl">Examining the relationship between the CRSS and S&P 500 price action. Red zones represent major market downturns from peak to trough.</p>
+
+        <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-2xl">
+            <canvas id="mainChart" height="400"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const CRASH_ZONES = {
+            'DotCom': { drawTime: 'beforeDatasetsDraw', type: 'box', xMin: '2000-03-24', xMax: '2002-10-09', backgroundColor: 'rgba(239, 68, 68, 0.1)' },
+            'GFC': { drawTime: 'beforeDatasetsDraw', type: 'box', xMin: '2007-10-09', xMax: '2009-03-09', backgroundColor: 'rgba(239, 68, 68, 0.1)' },
+            'COVID': { drawTime: 'beforeDatasetsDraw', type: 'box', xMin: '2020-02-19', xMax: '2020-03-23', backgroundColor: 'rgba(239, 68, 68, 0.1)' },
+            'Bear2022': { drawTime: 'beforeDatasetsDraw', type: 'box', xMin: '2022-01-03', xMax: '2022-10-13', backgroundColor: 'rgba(239, 68, 68, 0.1)' }
+        };
+
+        Papa.parse("historical_crss_study.csv", {
+            download: true,
+            header: true,
+            dynamicTyping: true,
+            complete: function(results) {
+                const cleanData = results.data.filter(d => d.Date && d.CRSS_Score);
+                renderChart(cleanData);
+            }
+        });
+
+        function renderChart(data) {
+            const ctx = document.getElementById('mainChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => d.Date),
+                    datasets: [
+                        {
+                            label: 'CRSS Score',
+                            data: data.map(d => d.CRSS_Score),
+                            borderColor: '#10b981',
+                            borderWidth: 2,
+                            yAxisID: 'yCRSS',
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'S&P 500 (Log)',
+                            data: data.map(d => d.SP500_Close),
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            borderWidth: 1,
+                            yAxisID: 'ySPY',
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        yCRSS: { type: 'linear', position: 'right', min: -100, max: 100, grid: { color: '#334155' } },
+                        ySPY: { type: 'logarithmic', position: 'left', display: true }
+                    },
+                    plugins: {
+                        annotation: { annotations: CRASH_ZONES },
+                        legend: { labels: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
