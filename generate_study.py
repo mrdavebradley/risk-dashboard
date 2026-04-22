@@ -1,10 +1,9 @@
 import yfinance as yf
 import pandas as pd
 import numpy as np
-import os
 from datetime import datetime
 
-# The core indicators and weights
+# Define indicators and lead-heavy weights
 indicators = {
     "VIX": {"ticker": "^VIX", "w": 0.12, "dir": -1},
     "DXY": {"ticker": "DX-Y.NYB", "w": 0.15, "dir": -1},
@@ -21,33 +20,35 @@ def generate_study():
     start_date = "1994-01-01"
     end_date = datetime.now().strftime("%Y-%m-%d")
 
-    print("Step 1: Downloading Market Data...")
-    # Fetch S&P 500 for the baseline
+    print("--- Step 1: Downloading Historical Data ---")
     try:
-        sp500_data = yf.download("^GSPC", start=start_date, end=end_date, progress=False)
-        sp500 = sp500_data['Close']
+        # Get S&P 500 Close
+        sp500_raw = yf.download("^GSPC", start=start_date, end=end_date, progress=False)
+        sp500 = sp500_raw['Close']
     except Exception as e:
-        print(f"Critical Error: Could not fetch S&P 500: {e}")
+        print(f"Error fetching SP500: {e}")
         return
-    
+
     data_frames = {}
     for name, info in indicators.items():
-        print(f"Downloading {name}...")
+        print(f"Fetching {name}...")
         try:
             df = yf.download(info['ticker'], start=start_date, end=end_date, progress=False)['Close']
             data_frames[name] = df
-        except Exception as e:
-            print(f"Warning: Could not fetch {name}: {e}")
+        except:
+            print(f"Warning: Skipping {name}")
 
+    # Combine into one master table
     master_df = pd.DataFrame(data_frames)
     master_df['SP500'] = sp500
     master_df = master_df.sort_index().ffill()
 
-    print("Step 2: Processing 30-year rolling calculations (approx. 5 mins)...")
+    print("--- Step 2: Calculating 30-Year CRSS History ---")
     crss_series = []
     
+    # Iterate through each day to calculate the rolling Z-Score
     for i in range(len(master_df)):
-        if i < 252:
+        if i < 252: # Need 1 year of prior data for the first calculation
             crss_series.append(np.nan)
             continue
 
@@ -58,31 +59,34 @@ def generate_study():
         active_weights = 0
 
         for name, info in indicators.items():
-            if name not in current or pd.isna(current[name]): continue
+            if name not in current or pd.isna(current[name]):
+                continue
             
             series = lookback[name].dropna()
-            if len(series) < 100: continue
+            if len(series) < 150: # Ensure enough data points for a valid mean
+                continue
             
             mean = series.mean()
             std = series.std()
             if std == 0: continue
             
-            # Z-Score Calculation
+            # Normalize to -1 to +1 range
             z = (current[name] - mean) / (std * 3)
             norm = max(min(z * info['dir'], 1), -1)
             
             temp_score += (norm * info['w'])
             active_weights += info['w']
 
+        # Re-scale if some indicators were missing (e.g., pre-BTC)
         final_daily = (temp_score / active_weights) * 100 if active_weights > 0 else 0
         crss_series.append(round(final_daily, 2))
 
     master_df['CRSS'] = crss_series
     
-    # Filter for the final CSV starting at 1995
+    # Save the data starting from 1995
     final_output = master_df.loc["1995-01-01":][['CRSS', 'SP500']]
     final_output.to_csv('historical_crss_study.csv')
-    print("SUCCESS: historical_crss_study.csv generated.")
+    print("--- SUCCESS: historical_crss_study.csv generated ---")
 
 if __name__ == "__main__":
     generate_study()
