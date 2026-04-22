@@ -23,7 +23,12 @@ def generate_study():
 
     print("Step 1: Downloading Market Data...")
     # Fetch S&P 500 for the baseline
-    sp500 = yf.download("^GSPC", start=start_date, end=end_date, progress=False)['Close']
+    try:
+        sp500_data = yf.download("^GSPC", start=start_date, end=end_date, progress=False)
+        sp500 = sp500_data['Close']
+    except Exception as e:
+        print(f"Critical Error: Could not fetch S&P 500: {e}")
+        return
     
     data_frames = {}
     for name, info in indicators.items():
@@ -38,7 +43,7 @@ def generate_study():
     master_df['SP500'] = sp500
     master_df = master_df.sort_index().ffill()
 
-    print("Step 2: Processing 30-year rolling calculations...")
+    print("Step 2: Processing 30-year rolling calculations (approx. 5 mins)...")
     crss_series = []
     
     for i in range(len(master_df)):
